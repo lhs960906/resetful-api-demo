@@ -15,4 +15,4 @@ database = "go_course"
 level = "debug"
 dir = "logs"
 format = "text"
-to = "stdout
+to = "stdout"
