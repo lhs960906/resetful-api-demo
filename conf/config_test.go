@@ -37,3 +37,20 @@ func TestLoadConfigFromEnv(t *testing.T) {
 		should.Equal("lhs960906", conf.C().MySQL.Password)
 	}
 }
+
+// 测试从配置文件中加载配置并初始化数据库客户端
+func TestGetDB(t *testing.T) {
+	should := assert.New(t)
+	// os.Setenv("MYSQL_HOST", "192.168.111.50")
+	// os.Setenv("MYSQL_PORT", "3306")
+	// os.Setenv("MYSQL_USERNAME", "root")
+	// os.Setenv("MYSQL_PASSWORD", "123456")
+	// os.Setenv("MYSQL_DATABASE", "test")
+
+	// err := conf.LoadConfigFromEnv()
+	err := conf.LoadConfigFromToml("../etc/demo.toml")
+
+	if should.NoError(err) {
+		conf.C().MySQL.GetDB()
+	}
+}

@@ -11,8 +11,16 @@ import (
 func LoadConfigFromToml(filePath string) error {
 	config = NewDefaultConfig()
 
-	if _, err := toml.DecodeFile(filePath, config); err != nil {
+	// 加载配置文件
+	_, err := toml.DecodeFile(filePath, config)
+	if err != nil {
 		return fmt.Errorf("load config from file error! path: %s, %s", filePath, err)
+	}
+
+	// 加载 db 全局实例
+	db, err = config.MySQL.getDBConn()
+	if err != nil {
+		return fmt.Errorf("load db client err! error: %s", err)
 	}
 
 	return nil
@@ -22,8 +30,15 @@ func LoadConfigFromToml(filePath string) error {
 func LoadConfigFromEnv() error {
 	config = NewDefaultConfig()
 
-	if err := env.Parse(config); err != nil {
+	err := env.Parse(config)
+	if err != nil {
 		return fmt.Errorf("load config from env error!, %s", err)
+	}
+
+	// 加载 db 全局实例
+	db, err = config.MySQL.getDBConn()
+	if err != nil {
+		return fmt.Errorf("load db client err! error: %s", err)
 	}
 
 	return nil
