@@ -19,3 +19,9 @@
 
 # Go workspace file
 go.work
+
+# sql
+*sql
+
+# 
+Demo后端学习.md
